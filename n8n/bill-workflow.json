@@ -1,0 +1,56 @@
+{
+  "name": "Bill Agent Automation",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "bill-agent",
+        "options": {}
+      },
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        100,
+        300
+      ],
+      "id": "webhook-id"
+    },
+    {
+      "parameters": {
+        "url": "=http://api.textmebot.com/send.php?recipient={{ $json.body.recipient }}&apikey={{ $json.body.apikey }}&text={{ encodeURIComponent($json.body.message) }}&json=yes",
+        "method": "GET",
+        "options": {}
+      },
+      "name": "Send Bill via TextMeBot",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        400,
+        300
+      ],
+      "id": "textmebot-node-id"
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send Bill via TextMeBot",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "id": "7",
+  "meta": {
+    "instanceId": "local"
+  }
+}
